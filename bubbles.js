@@ -1,4 +1,5 @@
 javascript: function start() {
+    //work please
     var ask = prompt("Hello, My name is Bubbles. How can I help you? \n  |  | \n|___|");
     var answer = ask.toLowerCase();
     var calculator = answer;

@@ -1,6 +1,51 @@
 javascript: function start() {
-    var ask = prompt("Hello, My name is Bubbles. How can I help you?");
+    var ask = prompt("Hello, My name is Bubbles. How can I help you? \n  |  | \n|___|");
     var answer = ask.toLowerCase();
+    var calculator = answer;
+    var feedBack = true;
+    if (calculator.indexOf("+") != -1) {
+        var plus = calculator.indexOf("+");
+        num1 = calculator.slice(0,plus);
+        num2 = calculator.slice(plus + 1,calculator.length);
+        num1 = parseFloat(num1);
+        num2 = parseFloat(num2);
+        ans = num1 + num2;
+        alert(ans);
+        feedBack = false;
+    }
+
+    if (calculator.indexOf("-") != -1) {
+        var minus = calculator.indexOf("-");
+        num1 = calculator.slice(0,minus);
+        num2 = calculator.slice(minus + 1,calculator.length);
+        num1 = parseFloat(num1);
+        num2 = parseFloat(num2);
+        ans = num1 - num2;
+        alert(ans);
+        feedBack = false;
+    }
+
+    if (calculator.indexOf("*") != -1) {
+        var times = calculator.indexOf("*");
+        num1 = calculator.slice(0,times);
+        num2 = calculator.slice(times + 1,calculator.length);
+        num1 = parseFloat(num1);
+        num2 = parseFloat(num2);
+        ans = num1 * num2;
+        alert(ans);
+        feedBack = false;
+    }
+
+    if (calculator.indexOf("/") != -1) {
+        var devide = calculator.indexOf("/");
+        num1 = calculator.slice(0,devide);
+        num2 = calculator.slice(devide + 1,calculator.length);
+        num1 = parseFloat(num1);
+        num2 = parseFloat(num2);
+        ans = num1 / num2;
+        alert(ans);
+        feedBack = false;
+    }
     switch (answer) {
         case "hello":
             alert("Hello, Sir.");
@@ -35,18 +80,18 @@ javascript: function start() {
         case "coin flip":
             flip();
             break;
-        case "email":
-            email();
-            break;
         case "map":
             map();
             break;
+        
         case "help":
             help();
             break;
         default:
-            alert("Sorry Sir, please retry.");
-            start();
+            if (feedBack === true) {
+                alert("Sorry Sir, please retry.");
+                start();
+            }
     }
 }
 
@@ -355,44 +400,7 @@ function dice() {
     alert(roll);
 }
 
-function email() {
 
-    var s=document.createElement('script');
-    s.setAttribute('src','https://cdn.emailjs.com/dist/email.min.js');
-    document.getElementsByTagName('head')[0].appendChild(s);
-
-    var email = prompt("Who do you want to send this too?");
-    email = email.toLowerCase();
-    if (email == "kim") {
-        email = "klefevre5@gmail.com";
-    }
-    if (email == "jared") {
-        email = "jaredandkim@yahoo.com";
-    }
-    if (email == "me") {
-        email = "mbl6050@gmail.com";
-    }
-    
-    
-    var subject = prompt("What subject do you want?");
-    var note = prompt("What do you want to say?");
-
-    function send() {
-        (function(){
-              emailjs.init("user_pPnHsNL6N8tsUXYAQ9zJP");
-           })();
-
-                emailjs.send("gmail","email",{email: email, subject: subject, body: note}).then(function(response) {
-           alert("SUCCESS sir");
-        }, function(err) {
-           alert("FAILED sir");
-        });
-
-    }
-
-    setTimeout(send, 1000);
-
-}
 
 
 function map() {

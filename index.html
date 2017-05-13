@@ -1,9 +1,67 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html>
   <head>
-    
+	
   </head>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+  <script>
+	
+      function start() {
+        if (annyang) {
+            var commands = {
+                "*speach": text
+            };
+            annyang.addCommands(commands);
+
+            annyang.start();
+            
+            
+            function text(speach) {
+                speach = speach.toLowerCase();
+                function see(thing) {
+                    return speach.search(thing);
+                } 
+                function cut(thing2, thing3) {
+                    return speach.slice(thing2, thing3);
+                }
+                if (see("call") != -1) {
+                    var num = cut(5);
+                    if (num == "kim" || num == "kim lefevre" || num == "mom") {
+                        window.location.href = "tel:4066717704";
+                    }
+                    if (num == "jared" || num == "jared lefevre" || num == "dad") {
+                        window.location.href = "tel:4066711956";
+                    }
+                    if (num == "james" || num == "james lefevre" || num == "lames") {
+                        window.location.href = "tel:4066710670";
+                    }
+                    if (num == "tyler" || num == "tyler lefevre" || num == "ty" || num == "tie" || num == "ti") {
+                        window.location.href = "tel:4068502810";
+                    }
+                    if (num == "ashley" || num == "ashley lefevre" || num == "sister" || num == "ash" || num == "as") {
+                        window.location.href = "tel:4066714090";
+                    }
+                    if (num == "william" || num == "william lefevre" || num == "will" || num == "willie" || num == "willy") {
+                        window.location.href = "tel:4066714090";
+                    }
+                    else {
+                        window.location.href = "tel:" + num;
+                    }
+                }
+            }
+	    }
+      }
+      start();
+      
+      /*var n = s("hi");
+      var msg = new SpeechSynthesisUtterance(n);
+      window.speechSynthesis.speak(msg);
+      annyang.abort();*/
+      
+      
+  </script>
   <body>
-    <p>Hello</p>
+	<p>Hello, I am Bubbles.</p>
   </body>
-</html>
+</html>		

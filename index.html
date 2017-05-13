@@ -12,7 +12,7 @@
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(getPosition);
-                navigator.geolocation.watchPosition(showPosition);
+                navigator.geolocation.watchPosition(distancedTraveled);
             } else {
                 x.innerHTML = "Geolocation is not supported by this browser.";
             }

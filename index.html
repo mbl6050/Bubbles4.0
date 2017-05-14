@@ -39,6 +39,10 @@
         }
         
         getLocation();
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', "https://api.wolframalpha.com/v1/result?i=" + "how many people in california" + "%3F&appid=" + "L597EH-Q28TJLHUKT", true);
+        xhr.send();
     </script>
 
 </html>

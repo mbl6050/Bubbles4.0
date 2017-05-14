@@ -6,9 +6,7 @@
     <script>
         var startLat;
         var startLong;
-        var distanceTravled = 0;
-        var latRay = [];
-        var longRay = [];
+        var distance = 0;
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(getPosition);
@@ -26,23 +24,21 @@
             var long = position.coords.longitude;
             var latChange = Math.abs(startLat - lat);
             var longChange = Math.abs(startLong - long);
-            latRay.push(latChange);
-            longRay.push(latChange);
-            console.log(latChange);
-            console.log(longChange);
+            
+            var a = Math.pow(Math.sin(latChange/2),2) + Math.cos(lat) * cos(startLat) *                                                   Math.pow(Math.sin(longChange/2),2);
+            var c = 2 * Math.atan2( Math.sqrt(a), Math.sqrt(1-a));
+            var d = 3961 * c;
+            console.log(d);
+            distance = d + distance;
+            
             
         }
         
         function data() {
-            alert(latRay);
-            alert(longRay);
+            alert(distance);
         }
         
         getLocation();
-        
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', "https://api.wolframalpha.com/v1/result?i=" + "how many people in california" + "%3F&appid=" + "L597EH-Q28TJLHUKT", true);
-        xhr.send();
     </script>
 
 </html>

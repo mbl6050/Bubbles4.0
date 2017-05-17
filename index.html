@@ -1,44 +1,150 @@
 <!DOCTYPE html>
 <html>
-    <body>
-        <button onclick="data()">Look at data</button>
-    </body>
-    <script>
-        var startLat;
-        var startLong;
-        var distance = 0;
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(getPosition);
-                navigator.geolocation.watchPosition(distanceTraveled);
-            } else {
-                x.innerHTML = "Geolocation is not supported by this browser.";
-            }
-        }
-        function getPosition(position) {
-            startLat = position.coords.latitude;
-            startLong = position.coords.longitude;
-        }
-        function distanceTraveled(position) {
-            var lat = position.coords.latitude;
-            var long = position.coords.longitude;
-            var latChange = Math.abs(startLat - lat);
-            var longChange = Math.abs(startLong - long);
-            
-            var a = Math.pow(Math.sin(latChange/2),2) + Math.cos(lat) * cos(startLat) *                                                   Math.pow(Math.sin(longChange/2),2);
-            var c = 2 * Math.atan2( Math.sqrt(a), Math.sqrt(1-a));
-            var d = 3961 * c;
-            console.log(d);
-            distance = d + distance;
-            
-            
-        }
-        
-        function data() {
-            alert(distance);
-        }
-        
-        getLocation();
-    </script>
+  <head>
+	
+  </head>
+  <body>
+      <button id="button" onclick=noVoice()><img id="img" src="bubbles.png"/></button>
+  </body>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+  <script>
+	  var voice = true;
+      function start() {
+        if (annyang) {
+            var commands = {
+                "Bubbles *speach": text
+            };
+            annyang.addCommands(commands);
 
+            annyang.start();
+            
+            function text(speach) {
+                AI(speach);
+            }
+            
+	    }
+      }
+      
+      
+      function AI(speach) {
+          console.log(speach);
+          speach = speach.toLowerCase();
+          function see(string,thing) {
+              return string.search(thing);
+          } 
+          function cut(string,thing2,thing3) {
+              return string.slice(thing2, thing3);
+          }
+          if (see(speach,"call") != -1) {
+              var num = cut(speach,5);
+              if (num == "kim" || num == "kim lefevre" || num == "mom") {
+                  window.location.href = "tel:4066717704";
+              }
+              if (num == "jared" || num == "jared lefevre" || num == "dad") {
+                  window.location.href = "tel:4066711956";
+              }
+              if (num == "james" || num == "james lefevre" || num == "lames") {
+                  window.location.href = "tel:4066710670";
+              }
+              if (num == "tyler" || num == "tyler lefevre" || num == "ty" || num == "tie" || num == "ti") {
+                  window.location.href = "tel:4068502810";
+              }
+              if (num == "ashley" || num == "ashley lefevre" || num == "sister" || num == "ash" || num == "as") {
+                  window.location.href = "tel:4066714090";
+              }
+              if (num == "william" || num == "william lefevre" || num == "will" || num == "willie" || num == "willy") {
+                  window.location.href = "tel:4066714090";
+              }
+              if (num == "" || num == " " || num == "   ") {
+
+              }
+              else {
+                  window.location.href = "tel:" + num;
+              }
+          }
+          if (see(speach,"search for") != -1  || see(speach,"search") != -1) {
+              var search
+              if (see(speach,"search for") != -1) {
+                  search = cut(speach,11);
+              }
+              else {
+                  search = cut(speach,6);
+              }
+              var xmlhttp = new XMLHttpRequest();
+              var url = "https://crossorigin.me/https://api.wolframalpha.com/v1/spoken?i=" + search + "&appid=L597EH-Q28TJLHUKT";
+
+              xmlhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200) {
+                      console.log(this.response);
+                      search = this.response;
+                      if (voice == true) { 
+                          var msg = new SpeechSynthesisUtterance(search);
+                          window.speechSynthesis.speak(msg);
+                      }
+                      else {
+                          alert(search);
+                      }
+                  }
+              };
+              xmlhttp.open("GET", url, true);
+              xmlhttp.send();
+
+
+              if (voice == true) { 
+                  var msg = new SpeechSynthesisUtterance("Searching for "+ search);
+                  window.speechSynthesis.speak(msg);
+              }
+          }
+      }
+      
+      
+      function noVoice() {
+          var ans = prompt("Hello, What can I do for you?");
+          if (ans == "" || ans == " ") {
+            
+          }
+          else {
+            voice = false;
+            AI(ans);
+          }
+      }
+      start();
+      
+      var w = window.innerWidth;
+      var h = window.innerHeight; 
+      console.log(w);
+      console.log(h);
+      if (w > h) {
+        w = h;
+      }
+      else {
+        h = w;
+      }
+      var button = document.getElementById("button");
+      button.style.height = h + "px";
+      button.style.width = w + "px";
+      button.style.left = (window.innerWidth - w) / 2 + "px";
+      button.style.top = (window.innerHeight - h) / 2 + "px";
+      
+      /*var n = s("hi");
+      var msg = new SpeechSynthesisUtterance(n);
+      window.speechSynthesis.speak(msg);
+      annyang.abort();*/
+      
+      
+  </script>
+  
+  <style>
+    #img {
+      width: 100%;
+      height: 100%;
+    }
+    #button {
+      position: absolute;
+      background-color: yellow;
+    }
+    
+  
+  </style>
 </html>

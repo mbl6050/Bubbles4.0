@@ -12,18 +12,16 @@ function start() {
       var message = AI(speech);
       respond(message);
   }
-  if (annyang) {
-    
-      var commands = {
-          "Bubbles *speech": text
-      };
-      annyang.addCommands(commands);
-
-      annyang.start();
-      
-      
-      
-  }
+  var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 5;
+  recognition.start();
+  recognition.onend = function() {recognition.start();};
+  recognition.onresult = function(event) {
+      console.log('You said: ', event.results[0][0].transcript);
+      var speech = event.results[0][0].transcript;
+      text(speech);
+  };
 }
 
 
@@ -32,24 +30,26 @@ function AI(speech) {
     speech = speech.toLowerCase();
     
     //Phone call section
-    if (see(speech,"call") != -1) {
-      call(speech);
-    }
-    //Phone call section
-    
-    else if (see(speech,"search for") != -1  || see(speech,"search") != -1) {
-      wolfSearch(speech);
-        
-    }
-    else {
+    if (see(speech, "bubbles") != -1) {
+      if (see(speech,"call") != -1) {
+        call(speech);
+      }
+      //Phone call section
       
+      else if (see(speech,"search for") != -1  || see(speech,"search") != -1) {
+        wolfSearch(speech);
+          
+      }
+      else {
+        
+      }
     }
 }
 
 
 
 function call(speech) {
-  var num = cut(speech,5);
+  var num = cut(speech,see(speech, "call") + 5);
   if (num == "kim" || num == "kim lefevre" || num == "mom") {
       window.location.href = "tel:4066717704";
   }
@@ -78,6 +78,7 @@ function call(speech) {
 }
 
 function wolfSearch(speech) {
+  console.log("search");
   var search;
   if (see(speech,"search for") != -1) {
       search = cut(speech,11);
@@ -142,18 +143,3 @@ function noVoice() {
 }
 start();
 
-var w = window.innerWidth;
-var h = window.innerHeight; 
-console.log(w);
-console.log(h);
-if (w > h) {
-  w = h;
-}
-else {
-  h = w;
-}
-var button = document.getElementById("button");
-button.style.height = h + "px";
-button.style.width = w + "px";
-button.style.left = (window.innerWidth - w) / 2 + "px";
-button.style.top = (window.innerHeight - h) / 2 + "px";

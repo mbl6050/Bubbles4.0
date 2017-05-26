@@ -2,12 +2,14 @@
 <html manifest="manifest.appcache">
 <!--<html>-->
   <head>
+    <link rel="icon" sizes="192x192" href="bubbles.png"> 
 	  <link rel="appcache" href="/manifest.appcache">
 	  <meta name="mobile-web-app-capable" content="yes">
   </head>
+  <title>Bubbles 4.0</title>
   <body>
       <button id="button"></button>
-      <button id="switch" onclick="speechORtext()">Speech On</button>
+      
       <div id="notification"></div>
       
   </body>
@@ -64,11 +66,9 @@
       if (localStorage.switch == "off") {
         localStorage.switch = "on";
         notify("Voice On");
-        document.getElementById("switch").innerHTML = "Speech On";
       }
       else {
         notify("Text On");
-        document.getElementById("switch").innerHTML = "Speech Off";
         localStorage.switch = "off";
       }
     }

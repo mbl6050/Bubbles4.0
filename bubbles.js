@@ -16,11 +16,10 @@ function start() {
   recognition.interimResults = false;
   recognition.maxAlternatives = 5;
   recognition.start();
-  recognition.onend = function() {recognition.start();};
   recognition.onresult = function(event) {
       console.log('You said: ', event.results[0][0].transcript);
       var speech = event.results[0][0].transcript;
-      text(speech);
+      AI(speech);
   };
 }
 
@@ -30,20 +29,20 @@ function AI(speech) {
     speech = speech.toLowerCase();
     
     //Phone call section
-    if (see(speech, "bubbles") != -1) {
-      if (see(speech,"call") != -1) {
-        call(speech);
-      }
-      //Phone call section
-      
-      else if (see(speech,"search for") != -1  || see(speech,"search") != -1) {
-        wolfSearch(speech);
-          
-      }
-      else {
-        
-      }
+    
+    if (see(speech,"call") != -1) {
+      call(speech);
     }
+    //Phone call section
+    
+    else if (see(speech,"search for") != -1  || see(speech,"search") != -1) {
+      wolfSearch(speech);
+        
+    }
+    else {
+      
+    }
+    
 }
 
 
@@ -132,14 +131,20 @@ function respond(message) {
 
 
 function noVoice() {
+  if (localStorage.switch == "off") {
     var ans = prompt("Hello, What can I do for you?");
-    if (ans === "" || ans == " ") {
+    if (ans === "" || ans == " " || ans === false || ans === null) {
       
     }
     else {
       voice = false;
       AI(ans);
     }
+  }
+  else {
+    voice = true;
+    start();
+  }
 }
-start();
+
 

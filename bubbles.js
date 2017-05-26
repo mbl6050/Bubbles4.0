@@ -23,7 +23,6 @@ function start() {
   };
 }
 
-
 function AI(speech) {
     var resp;
     speech = speech.toLowerCase();

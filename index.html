@@ -1,22 +1,114 @@
 <!DOCTYPE html>
-<html>
+<html manifest="manifest.appcache">
+<!--<html>-->
   <head>
-	
+	  <link rel="appcache" href="/manifest.appcache">
+	  <meta name="mobile-web-app-capable" content="yes">
   </head>
   <body>
-      <button id="button" onclick=noVoice()><img id="img" src="bubbles.png"/></button>
-      <p id="text"></p>
+      <button id="button"></button>
+      <button id="switch" onclick="speechORtext()">Speech On</button>
+      <div id="notification"></div>
       
   </body>
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
-  <script src="bubbles.js"></script>
-  <script src="distance.js"></script>
+  <!--<script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>-->
+  <script type="text/javascript" src="bubbles.js"></script>
+  <!--<script src="distance.js"></script>-->
   <script>
 	  
+    var press = 0;
+    var go;
+    function down(){
+      console.log("down");
+      go = setInterval(timer, 500);
+      function timer() {
+        press = press + 1;
+        if (press == 3) {
+          speechORtext();
+        }
+      }
+    }
+    function up() {
       
+      clearInterval(go);
+      if (press >= 3) {
+        
+      }
+      else {
+        noVoice();
+      }
+      press = 0;
+    }
+    var button = document.getElementById("button");
+    button.addEventListener("mousedown",down);
+    button.addEventListener("mouseup",up);
+    
+    button.addEventListener("touchstart", down, false);          //<img id="img" src="bubbles.png"/>
+    button.addEventListener("touchend", up, false);
+    /*document.addEventListener("contextmenu", function(e){
+        e.preventDefault();
+    }, false);*/
+    
+    
+    //onmousedown="down()" onmouseup="up()"
+    
+    if (localStorage.switch != "on" || localStorage.switch != "off") {
+      localStorage.setItem("switch", "on");
+    }
+    else {
+      if (localStorage.switch != "on") {
+        document.getElementById("button").innerHTML = "Speech Off";
+      }
+    }
+    function speechORtext() {
+      if (localStorage.switch == "off") {
+        localStorage.switch = "on";
+        notify("Voice On");
+        document.getElementById("switch").innerHTML = "Speech On";
+      }
+      else {
+        notify("Text On");
+        document.getElementById("switch").innerHTML = "Speech Off";
+        localStorage.switch = "off";
+      }
+    }
 
-     
+
+
+
+
+
+    var w = window.innerWidth;
+    var h = window.innerHeight; 
+    if (w > h) {
+      w = h;
+    }
+    else {
+      h = w;
+    }
+    
+    button.style.height = h + "px";
+    button.style.width = w + "px";
+    button.style.left = (window.innerWidth - w) / 2 + "px";
+    button.style.top = (window.innerHeight - h) / 2 + "px";
+    var bh = h + "px";
+    var bw = w + "px";
+    var bd = bh + " " + bw;
+    button.style.backgroundSize = bd;
+    
+    var notifacation = document.getElementById("notification");
+    notification.style.width = w + "px";
+    notification.style.height =  .2 * h + "px";
+    notification.style.left = (window.innerWidth - w) / 2 + "px";
+    notification.style.top = (window.innerHeight - h * .2) / 2 + "px";
+    function notify(message) {
+      notification.innerHTML = message;
+      notification.style.zIndex = 2;
+      setTimeout(fade,2000);
+      function fade() {
+        notification.style.zIndex = "0";
+      }
+    }
   </script>
   
   <style>
@@ -26,9 +118,16 @@
     }
     #button {
       position: absolute;
-      background-color: yellow;
+      z-index: 1;
+      background-image: url(bubbles.png);
     }
-    
+    #notification {
+      position: absolute;
+      z-index 0;
+      text-align: center;
+      background-color: red;
+      font-size: 8em;
+    }
   
   </style>
 </html>

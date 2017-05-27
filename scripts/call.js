@@ -1,5 +1,5 @@
 function call(speech) {
-  var num = cut(speech,see(speech, "call") + 5);
+  var num = cut(speech,see(speech, "call") + 4);
   alert(num);
   
   

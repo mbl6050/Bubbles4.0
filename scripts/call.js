@@ -1,6 +1,8 @@
 function call(speech) {
   var num = cut(speech,see(speech, "call") + 5);
   alert(num);
+  
+  
   if (num == "kim" || num == "kim lefevre" || num == "mom") {
       window.location.href = "tel:4066717704";
   }

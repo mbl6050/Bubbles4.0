@@ -13,6 +13,9 @@
   </body>
   <script type="text/javascript" src="scripts/bubbles.js"></script>
   <script type="text/javascript" src="scripts/call.js"></script>
+  <script type="text/javascript" src="scripts/wolf.js"></script>
+  <script type="text/javascript" src="scripts/textMessage.js"></script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <script>
 	  
     var press = 0;
@@ -42,30 +45,31 @@
     button.addEventListener("mousedown",down);
     button.addEventListener("mouseup",up);
     
-    button.addEventListener("touchstart", down, false);          //<img id="img" src="bubbles.png"/>
+    button.addEventListener("touchstart", down, false);          
     button.addEventListener("touchend", up, false);
-    /*document.addEventListener("contextmenu", function(e){
-        e.preventDefault();
-    }, false);*/
     
+      
+      
+      
     
-    //onmousedown="down()" onmouseup="up()"
-    
-    if (localStorage.switch != "on" || localStorage.switch != "off") {
+    if (localStorage.switch != "on" && localStorage.switch != "off") {
       localStorage.setItem("switch", "on");
     }
     else {
-      if (localStorage.switch != "on") {
-        document.getElementById("button").innerHTML = "Speech Off";
+      if (localStorage.switch == "on") {
+        notify("Voice Mode");
+      }
+      else {
+          notify("Text Mode");
       }
     }
     function speechORtext() {
       if (localStorage.switch == "off") {
         localStorage.switch = "on";
-        notify("Voice On");
+        notify("Voice Mode");
       }
       else {
-        notify("Text On");
+        notify("Text Mode");
         localStorage.switch = "off";
       }
     }
